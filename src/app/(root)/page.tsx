@@ -3,7 +3,6 @@ import { auth } from "@/auth";
 import SearchForm from "@/components/SearchForm";
 import StartupCard from "@/components/StartupCard";
 import connectToDB from "@/lib/db";
-import { ObjectId } from "mongoose";
 
 export interface StartupCardType {
   createdAt: Date;
