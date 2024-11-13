@@ -11,7 +11,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       await connectToDB();
 
       const existingUser = await User.findOne({ email: user.email });
-
       if (!existingUser) {
         await User.create({
           gitHubId: user.id,
@@ -29,12 +28,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, account, profile }) {
       if (account && profile) {
         // Log to check if the profile.id is present
-        console.log("Profile ID from GitHub:", token);
-
-        const user = await User.findOne({ gitHubId: profile.id });
+        console.log(token.sub);
+        const user = await User.findOne({ gitHubId: token.sub });
+        console.log("user" , user);
         if (user) {
-          token.id = user.id;  // Add the user ID to the token.
-          console.log("Setting token.id:", token.id);
+          token.id = user.gitHubId; // Add the user ID to the token.
         }
       }
       return token;
@@ -43,13 +41,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     // This is where we attach 'token.id' to the session object.
     async session({ session, token }) {
       // Log to check if token.id exists
-      console.log("Session Token:", token);
-      
       // Assign the token.id to the session
       if (token.id) {
-        Object.assign(session , {id:token.id})
+        Object.assign(session, { id: token.jti });
       }
-      
+
       return session;
     },
   },

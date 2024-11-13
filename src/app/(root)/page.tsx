@@ -27,7 +27,6 @@ export default async function Home({
 }) {
   const { query } = await searchParams;
   const session = await auth();
-  console.log(session);
   await connectToDB();
   // let posts: StartupCardType[];
   // if (query) {
