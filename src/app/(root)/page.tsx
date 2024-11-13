@@ -3,20 +3,19 @@ import { auth } from "@/auth";
 import SearchForm from "@/components/SearchForm";
 import StartupCard from "@/components/StartupCard";
 import connectToDB from "@/lib/db";
-import Startup from "@/models/startUpModel";
 import { ObjectId } from "mongoose";
 
 export interface StartupCardType {
   createdAt: Date;
   views: number;
   author: {
-    _id: ObjectId;
+    _id: number;
     name: string;
     image: string;
     email: string;
     bio?: string;
   };
-  _id: ObjectId;
+  _id: number;
   image: string;
   description: string;
   category: string;
